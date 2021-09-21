@@ -2,32 +2,54 @@ import React from "react";
 import Footer from "./components/Footer/Footer";
 import Sidebar from "./components/Sidebar/Sidebar";
 import "./style.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./components/Home/Home";
+import AddProduct from "./components/AddProduct/AddProduct";
+import AboutUs from "./components/AboutUs/AbourUs";
 
-function App() {
+const routes = [
+  {
+    path: "/",
+    exact: true,
+    main: () => <Home />,
+  },
+  {
+    path: "/add-product",
+    main: () => <AddProduct />,
+  },
+  {
+    path: "/about",
+    main: () => <AboutUs />,
+  },
+];
+
+const App = () => {
   return (
-    <div className="wrapper">
-      <div className="d-flex align-items-stretch">
-        <Sidebar />
-        <div className="w-100">
-          <div className="content-container">
-            <div className="content-page">
-            content Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-              Ad, dolor cum nam quidem corrupti atque error repellat aspernatur
-              possimus harum quo consectetur nemo ut sed assumenda praesentium
-              id et alias qui hic nulla! Numquam doloremque beatae voluptas
-              possimus eligendi molestias eum a enim velit placeat, repudiandae
-              repellat quo tempora vitae maxime iusto rem minima maiores iure
-              corporis fugit totam. Sapiente sequi ipsa placeat temporibus optio
-              esse quam quasi amet delectus dolorem. Nemo labore ab fuga tempore
-              exercitationem pariatur sed ad, doloribus error possimus obcaecati
-            
+    <Router>
+      <div className="wrapper">
+        <div className="d-flex align-items-stretch">
+          <Sidebar />
+          <div className="w-100">
+            <div className="content-container">
+              <div className="content-page">
+                <Switch>
+                  {routes.map((route, index) => (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      exact={route.exact}
+                      children={<route.main />}
+                    />
+                  ))}
+                </Switch>
+              </div>
+              <Footer />
             </div>
-            <Footer />
           </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
-}
+};
 
 export default App;
