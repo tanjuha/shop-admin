@@ -4,7 +4,7 @@ import "./footer.css"
 const Footer = () => {
     return (
         <div className="footer">
-            Footer 
+            2021 &#169; Admin
         </div>
     )
 }

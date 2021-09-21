@@ -1,5 +1,7 @@
 :root {
     --w-sidebar: 250px;
+    --box-shadow: 0 0 35px 0 #9aa1ab26;
+    --text-color: #6c757d;
 }
 
 .content-container {
@@ -7,8 +9,10 @@
     flex-direction: column;
     min-height: 100vh;
     margin-left: var(--w-sidebar);
+    color: var(--text-color);
 }
 
 .content-page {
     flex: 1 1 auto;
+    padding: 35px;
 }
