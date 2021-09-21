@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "./components/Footer/Footer";
 import Sidebar from "./components/Sidebar/Sidebar";
-import "./style.css";
+import "./app.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
 import AddProduct from "./components/AddProduct/AddProduct";
