@@ -1,5 +1,12 @@
 .sidebar {
+    position: fixed;
     background-color: #ddd;
+    width: var(--w-sidebar);
+    z-index: 10;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .sidebar-nav {
     display: flex;

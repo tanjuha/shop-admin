@@ -1,0 +1,14 @@
+:root {
+    --w-sidebar: 250px;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-left: var(--w-sidebar);
+}
+
+.content-page {
+    flex: 1 1 auto;
+}
