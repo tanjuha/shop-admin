@@ -1,0 +1,11 @@
+.sidebar {
+    background-color: #ddd;
+}
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    
+}
+.sidebar-nav .nav-link {
+
+}
