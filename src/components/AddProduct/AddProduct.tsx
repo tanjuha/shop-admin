@@ -1,30 +1,29 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/reducers/productReducer";
 import "./addProduct.css";
 
 const AddProduct = () => {
   const [value, setValue] = useState([]);
+  const dispatch = useDispatch();
 
   const onChangeInput: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log(e.target.value);
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
   const onChangeTextArea: React.ChangeEventHandler<HTMLTextAreaElement> = (
     e
   ) => {
-    console.log(e.target.value);
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
   const onChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    console.log(e.target.value);
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    localStorage.setItem("product", JSON.stringify(value))
-    console.log("submit", value);
+    dispatch(addProduct(value));
   };
 
   return (
@@ -111,7 +110,7 @@ const AddProduct = () => {
             name="currencyType"
             onChange={onChangeSelect}
             defaultValue={"0"}
-            >
+          >
             <option disabled value="0">
               Select currency type
             </option>
