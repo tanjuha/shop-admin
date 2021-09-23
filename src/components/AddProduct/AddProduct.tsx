@@ -7,17 +7,11 @@ const AddProduct = () => {
   const [value, setValue] = useState([]);
   const dispatch = useDispatch();
 
-  const onChangeInput: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
-  };
-
-  const onChangeTextArea: React.ChangeEventHandler<HTMLTextAreaElement> = (
-    e
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
-  };
-
-  const onChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
@@ -36,7 +30,7 @@ const AddProduct = () => {
             type="text"
             className="form-control"
             name="title"
-            onChange={onChangeInput}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
@@ -44,7 +38,7 @@ const AddProduct = () => {
           <textarea
             className="form-control"
             name="description"
-            onChange={onChangeTextArea}
+            onChange={handleChange}
           ></textarea>
         </div>
         <div className="mb-3">
@@ -53,7 +47,7 @@ const AddProduct = () => {
             type="file"
             className="form-control"
             name="image"
-            onChange={onChangeInput}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3 d-flex align-items-end">
@@ -63,7 +57,7 @@ const AddProduct = () => {
               type="text"
               className="form-control"
               name="purchasePrice"
-              onChange={onChangeInput}
+              onChange={handleChange}
             />
           </div>
           <div className="form-check m-2">
@@ -71,7 +65,7 @@ const AddProduct = () => {
               className="form-check-input"
               type="radio"
               name="dollar"
-              onChange={onChangeInput}
+              onChange={handleChange}
             />
             <label className="form-check-label">&#x24;</label>
           </div>
@@ -80,7 +74,7 @@ const AddProduct = () => {
               className="form-check-input"
               type="radio"
               name="euro"
-              onChange={onChangeInput}
+              onChange={handleChange}
             />
             <label className="form-check-label">&#x20AC;</label>
           </div>
@@ -89,7 +83,7 @@ const AddProduct = () => {
               className="form-check-input"
               type="radio"
               name="hryvnia"
-              onChange={onChangeInput}
+              onChange={handleChange}
             />
             <label className="form-check-label">&#x20B4;</label>
           </div>
@@ -100,7 +94,7 @@ const AddProduct = () => {
             type="text"
             className="form-control"
             name="сurrencyСourse"
-            onChange={onChangeInput}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
@@ -108,7 +102,7 @@ const AddProduct = () => {
           <select
             className="form-select"
             name="currencyType"
-            onChange={onChangeSelect}
+            onChange={handleChange}
             defaultValue={"0"}
           >
             <option disabled value="0">
@@ -125,7 +119,7 @@ const AddProduct = () => {
             type="number"
             className="form-control"
             name="amount"
-            onChange={onChangeInput}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
@@ -134,7 +128,7 @@ const AddProduct = () => {
             type="number"
             className="form-control"
             name="salePrice"
-            onChange={onChangeInput}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
@@ -142,7 +136,7 @@ const AddProduct = () => {
           <select
             className="form-select"
             name="category"
-            onChange={onChangeSelect}
+            onChange={handleChange}
             defaultValue={0}
           >
             <option disabled value="0">
