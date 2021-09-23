@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "./components/Footer/Footer";
 import Sidebar from "./components/Sidebar/Sidebar";
 import "./app.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Home from "./components/Home/Home";
 import AddProduct from "./components/AddProduct/AddProduct";
 import AboutUs from "./components/AboutUs/AbourUs";
@@ -11,14 +11,21 @@ const routes = [
   {
     path: "/",
     exact: true,
+    main: () => <Redirect to="/shop-admin" /> ,
+  },
+  {
+    path: "/shop-admin",
+    exact: true,
     main: () => <Home />,
   },
   {
-    path: "/add-product",
+    path: "/shop-admin/add-product",
+    exact: true,
     main: () => <AddProduct />,
   },
   {
-    path: "/about",
+    path: "/shop-admin/about",
+    exact: true,
     main: () => <AboutUs />,
   },
 ];

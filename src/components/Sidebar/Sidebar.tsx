@@ -6,21 +6,21 @@ const Sidebar = () => {
   return (
     <>
       <nav className="sidebar">
-        <NavLink to="/" className="sidebar-brand">
+        <NavLink to="/shop-admin" className="sidebar-brand">
           Admin
         </NavLink>
         <div className="sidebar-nav">
-          <NavLink to="/" className="nav-link" exact activeClassName="active">
+          <NavLink to="/shop-admin" className="nav-link" exact activeClassName="active">
             Home
           </NavLink>
           <NavLink
-            to="/add-product"
+            to="/shop-admin/add-product"
             className="nav-link"
             activeClassName="active"
           >
             Add product
           </NavLink>
-          <NavLink to="/about" className="nav-link" activeClassName="active">
+          <NavLink to="/shop-admin/about" className="nav-link" activeClassName="active">
             About
           </NavLink>
         </div>
