@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/reducers/productReducer";
-import "./addProduct.css";
+import { IProduct } from "../../utils/interfaces";
+import DragDropImages from "../DragDropImages/DragDropImages";
+import "./style.css";
 
 const AddProduct = () => {
-  const [value, setValue] = useState([]);
+  const [state, setState] = useState<IProduct>({
+    photos: [],
+    title: "",
+    description: "",
+    purchasePrice: "",
+    сurrencyСourse: "",
+    currencyType: "",
+    amount: "",
+    salePrice: "",
+    category: "",
+  });
+
   const dispatch = useDispatch();
 
   const handleChange = (
@@ -12,12 +25,12 @@ const AddProduct = () => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
+    setState({ ...state, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch(addProduct(value));
+    dispatch(addProduct(state));
   };
 
   return (
@@ -40,15 +53,6 @@ const AddProduct = () => {
             name="description"
             onChange={handleChange}
           ></textarea>
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Imege</label>
-          <input
-            type="file"
-            className="form-control"
-            name="image"
-            onChange={handleChange}
-          />
         </div>
         <div className="mb-3 d-flex align-items-end">
           <div className="w-100">
@@ -146,6 +150,10 @@ const AddProduct = () => {
             <option value="2">Two</option>
             <option value="3">Three</option>
           </select>
+        </div>
+        <div className="">
+          <label className="form-label">Images</label>
+          <DragDropImages state={state} setState={setState} />
         </div>
         <button type="submit" className="btn btn-primary">
           Submit
