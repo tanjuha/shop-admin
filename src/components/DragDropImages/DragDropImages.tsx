@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { formatBytes } from "../../utils/helpers";
 import { IPhoto } from "../../utils/interfaces";
 import "./style.css";
 
@@ -94,13 +95,24 @@ const DragDropImages = ({ state, setState }: any) => {
             Drop files here or click to upload.
           </label>
         </div>
-        <div className="custom-file-preview">
+        <div className="photos-preview">
           {photos.length > 0 &&
             photos.map((item: IPhoto, index: number) => {
+              const sizeImg = formatBytes(item.size);
               return (
-                <div className="prev-img" key={index} data-imgindex={index}>
-                  <span onClick={handleDelete}>&times;</span>
-                  <img src={item.src} alt={item.name} />
+                <div className="prev-img justify-content-between" key={index} data-imgindex={index}>
+                 <div className="d-flex align-items-center">
+                 <img
+                    className="img-item"
+                    src={item.src}
+                    alt={item.name}
+                  />
+                  <div className="d-flex flex-column mx-2">
+                    <span className="img-name">{item.name}</span>
+                    <strong className="img-size">{sizeImg}</strong>
+                  </div>
+                 </div>
+                  <span className="img-delete" onClick={handleDelete}>&times;</span>
                 </div>
               );
             })}
