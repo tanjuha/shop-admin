@@ -35,7 +35,7 @@ const AddProduct = () => {
 
   return (
     <div>
-      <h3>Add Product</h3>
+      <h4 className="page-title">Add Product</h4>
       <form className="form-container" onSubmit={onSubmit}>
         <div className="row">
           <div className="col-xl-6">

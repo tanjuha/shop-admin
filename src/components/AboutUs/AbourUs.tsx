@@ -3,7 +3,7 @@ import React from "react";
 const AboutUs = () => {
   return (
     <>
-      <h3>About Us</h3>
+      <h4 className="page-title">About Us</h4>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nihil
         sapiente commodi cupiditate iure! Rem, vero dicta. Eius perferendis eum

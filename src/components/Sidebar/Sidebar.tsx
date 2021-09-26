@@ -20,6 +20,9 @@ const Sidebar = () => {
           >
             Add product
           </NavLink>
+          <NavLink to="/shop-admin/products" className="nav-link" activeClassName="active">
+            Products
+          </NavLink>
           <NavLink to="/shop-admin/about" className="nav-link" activeClassName="active">
             About
           </NavLink>
