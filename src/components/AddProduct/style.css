@@ -5,3 +5,8 @@
   box-shadow: var(--box-shadow);
   background: #fff;
 }
+
+.form-container button {
+  display: block;
+  margin: auto 0 auto auto;
+}
