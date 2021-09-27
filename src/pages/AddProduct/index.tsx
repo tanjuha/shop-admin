@@ -4,6 +4,7 @@ import { addProduct } from "../../store/slices/productReducer";
 import { Product } from "../../shared/types";
 import DragDropImages from "../../components/DragDropImages";
 import "./style.scss";
+import { Form, Row, Col, Button } from "react-bootstrap";
 
 const AddProduct = () => {
   const [state, setState] = useState<Product>({
@@ -34,119 +35,107 @@ const AddProduct = () => {
   };
 
   return (
-    <div>
+    <>
       <h4 className="page-title">Add Product</h4>
-      <form className="form-container" onSubmit={onSubmit}>
-        <div className="row">
-          <div className="col-xl-6">
-            <div className="mb-3">
-              <label className="form-label">Title</label>
-              <input
+      <Form className="form-container" onSubmit={onSubmit}>
+        <Row>
+          <Col xl="6">
+            <Form.Group className="mb-3">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
                 type="text"
-                className="form-control"
                 name="title"
                 onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Description</label>
-              <textarea
-                className="form-control"
+                required
+                placeholder="Title product"
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
                 name="description"
                 onChange={handleChange}
-              ></textarea>
-            </div>
-            <div className="">
-              <label className="form-label">Images</label>
+                required
+                placeholder="Description product"
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Images</Form.Label>
               <DragDropImages state={state} setState={setState} />
-            </div>
-          </div>
-          <div className="col-xl-6">
+            </Form.Group>
+          </Col>
+          <Col xl="6">
             <div className="mb-3 d-flex align-items-end">
-              <div className="w-100">
-                <label className="form-label">Purchase price</label>
-                <input
+              <Form.Group className="w-100">
+                <Form.Label>Purchase price</Form.Label>
+                <Form.Control
                   type="text"
                   className="form-control"
                   name="purchasePrice"
                   onChange={handleChange}
-                />
-              </div>
-              <div className="form-check m-2">
-                <input
-                  className="form-check-input"
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group className="form-check mb-2">
+                <Form.Check
                   type="radio"
-                  name="dollar"
+                  name="currencyType"
+                  label="&#x24;"
                   onChange={handleChange}
+                  id="dollar"
                 />
-                <label className="form-check-label">&#x24;</label>
-              </div>
-              <div className="form-check m-2">
-                <input
-                  className="form-check-input"
+              </Form.Group>
+              <Form.Group className="form-check mb-2">
+                <Form.Check
                   type="radio"
-                  name="euro"
+                  name="currencyType"
+                  label="&#x20AC;"
                   onChange={handleChange}
+                  id="euro"
                 />
-                <label className="form-check-label">&#x20AC;</label>
-              </div>
-              <div className="form-check m-2">
-                <input
-                  className="form-check-input"
+              </Form.Group>
+              <Form.Group className="form-check mb-2">
+                <Form.Check
                   type="radio"
-                  name="hryvnia"
+                  name="currencyType"
+                  label="&#x20B4;"
                   onChange={handleChange}
+                  id="hryvnia"
                 />
-                <label className="form-check-label">&#x20B4;</label>
-              </div>
+              </Form.Group>
             </div>
-            <div className="mb-3">
-              <label className="form-label">Currency course</label>
-              <input
-                type="text"
+            <Form.Group className="mb-3">
+              <Form.Label>Currency course</Form.Label>
+              <Form.Control
+                type="number"
                 className="form-control"
                 name="сurrencyСourse"
                 onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Currency type</label>
-              <select
-                className="form-select"
-                name="currencyType"
-                onChange={handleChange}
-                defaultValue={"0"}
-              >
-                <option disabled value="0">
-                  Select currency type
-                </option>
-                <option value="1">&#x24;</option>
-                <option value="2">&#x20AC;</option>
-                <option value="3">&#x20B4;</option>
-              </select>
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Amount</label>
-              <input
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Amount</Form.Label>
+              <Form.Control
                 type="number"
                 className="form-control"
                 name="amount"
                 onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Sale price</label>
-              <input
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Sale price</Form.Label>
+              <Form.Control
                 type="number"
                 className="form-control"
                 name="salePrice"
                 onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Category</label>
-              <select
-                className="form-select"
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                as="select"
+                className="form-control"
                 name="category"
                 onChange={handleChange}
                 defaultValue={0}
@@ -157,15 +146,15 @@ const AddProduct = () => {
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <button type="submit" className="btn btn-primary mt-3">
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Button variant="primary" type="submit">
           Create product
-        </button>
-      </form>
-    </div>
+        </Button>
+      </Form>
+    </>
   );
 };
 

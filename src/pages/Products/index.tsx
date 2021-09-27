@@ -2,11 +2,7 @@ import React from "react";
 import "./style.scss";
 
 const Products = () => {
-  return (
-    <div>
-      <h4 className="page-title">All products</h4>
-    </div>
-  );
+  return <h4 className="page-title">All products</h4>;
 };
 
 export default Products;

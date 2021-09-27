@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Form } from "react-bootstrap";
 import { formatBytes } from "../../shared/helpers";
 import { Photo } from "../../shared/types";
 import "./style.scss";
@@ -111,17 +112,17 @@ const DragDropImages = ({ state, setState }: any) => {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          <input
+          <Form.Control
             type="file"
             name="photos"
             placeholder="Enter photos"
             multiple
             id="filephotos"
             onChange={handleFileChange}
-          />
-          <label htmlFor="filephotos">
+          ></Form.Control>
+          <Form.Label htmlFor="filephotos">
             Drop files here or click to upload.
-          </label>
+          </Form.Label>
         </div>
         <div className="photos-preview">
           <PrevewPhotos prevPhotos={photos} deletePrevPhoto={handleDelete} />
