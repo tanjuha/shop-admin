@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/reducers/productReducer";
 import { IProduct } from "../../utils/interfaces";
-import DragDropImages from "../DragDropImages/DragDropImages";
+import DragDropImages from "../../components/DragDropImages";
 import "./style.scss";
 
 const AddProduct = () => {

@@ -1,6 +1,6 @@
 import React from "react";
-import Footer from "./components/Footer/Footer";
-import Sidebar from "./components/Sidebar/Sidebar";
+import Footer from "./pages/Footer";
+import Sidebar from "./components/Sidebar";
 import "./app.scss";
 import {
   BrowserRouter as Router,
@@ -8,10 +8,9 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Home from "./components/Home/Home";
-import AddProduct from "./components/AddProduct/AddProduct";
-import AboutUs from "./components/AboutUs/AbourUs";
-import Products from "./components/Products/Products";
+import Home from "./pages/Home";
+import AddProduct from "./pages/AddProduct";
+import Products from "./pages/Products";
 
 const routes = [
   {
@@ -33,11 +32,6 @@ const routes = [
     path: "/shop-admin/add-product",
     exact: true,
     main: () => <AddProduct />,
-  },
-  {
-    path: "/shop-admin/about",
-    exact: true,
-    main: () => <AboutUs />,
   },
 ];
 
