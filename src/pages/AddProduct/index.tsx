@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../store/slices/productReducer";
-import { IProduct } from "../../utils/interfaces";
+import { Product } from "../../shared/types";
 import DragDropImages from "../../components/DragDropImages";
 import "./style.scss";
 
 const AddProduct = () => {
-  const [state, setState] = useState<IProduct>({
+  const [state, setState] = useState<Product>({
     photos: [],
     title: "",
     description: "",

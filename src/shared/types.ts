@@ -1,4 +1,4 @@
-export interface IProduct {
+export interface Product {
   title: string;
   description: string;
   purchasePrice: string;
@@ -10,7 +10,7 @@ export interface IProduct {
   photos: any[];
 }
 
-export interface IPhoto {
+export interface Photo {
     name: string,
     size: number,
     src: string | undefined,

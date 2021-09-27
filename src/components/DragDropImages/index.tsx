@@ -1,7 +1,34 @@
 import React, { useState } from "react";
-import { formatBytes } from "../../utils/helpers";
-import { IPhoto } from "../../utils/interfaces";
+import { formatBytes } from "../../shared/helpers";
+import { Photo } from "../../shared/types";
 import "./style.scss";
+
+const PrevewPhotos = ({ prevPhotos, deletePrevPhoto }: any) => {
+  return (
+    prevPhotos.length > 0 &&
+    prevPhotos.map((item: Photo, index: number) => {
+      const sizeImg = formatBytes(item.size);
+      return (
+        <div
+          className="prev-img justify-content-between"
+          key={index}
+          data-imgindex={index}
+        >
+          <div className="d-flex align-items-center">
+            <img className="img-item" src={item.src} alt={item.name} />
+            <div className="d-flex flex-column mx-2">
+              <span className="img-name">{item.name}</span>
+              <strong className="img-size">{sizeImg}</strong>
+            </div>
+          </div>
+          <span className="img-delete" onClick={deletePrevPhoto}>
+            &times;
+          </span>
+        </div>
+      );
+    })
+  );
+};
 
 const DragDropImages = ({ state, setState }: any) => {
   const [dragEnterOver, setDragEnterOver] = useState(false);
@@ -69,6 +96,7 @@ const DragDropImages = ({ state, setState }: any) => {
   };
 
   const { photos } = state;
+
   return (
     <div className="file-upload">
       <div className="custom-form-group">
@@ -96,26 +124,7 @@ const DragDropImages = ({ state, setState }: any) => {
           </label>
         </div>
         <div className="photos-preview">
-          {photos.length > 0 &&
-            photos.map((item: IPhoto, index: number) => {
-              const sizeImg = formatBytes(item.size);
-              return (
-                <div className="prev-img justify-content-between" key={index} data-imgindex={index}>
-                 <div className="d-flex align-items-center">
-                 <img
-                    className="img-item"
-                    src={item.src}
-                    alt={item.name}
-                  />
-                  <div className="d-flex flex-column mx-2">
-                    <span className="img-name">{item.name}</span>
-                    <strong className="img-size">{sizeImg}</strong>
-                  </div>
-                 </div>
-                  <span className="img-delete" onClick={handleDelete}>&times;</span>
-                </div>
-              );
-            })}
+          <PrevewPhotos prevPhotos={photos} deletePrevPhoto={handleDelete} />
         </div>
       </div>
     </div>
