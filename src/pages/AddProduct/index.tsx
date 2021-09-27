@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../../redux/reducers/productReducer";
+import { addProduct } from "../../store/slices/productReducer";
 import { IProduct } from "../../utils/interfaces";
 import DragDropImages from "../../components/DragDropImages";
 import "./style.scss";
