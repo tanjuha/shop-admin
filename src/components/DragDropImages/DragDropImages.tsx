@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { formatBytes } from "../../utils/helpers";
 import { IPhoto } from "../../utils/interfaces";
-import "./style.css";
+import "./style.scss";
 
 const DragDropImages = ({ state, setState }: any) => {
   const [dragEnterOver, setDragEnterOver] = useState(false);

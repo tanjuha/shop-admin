@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/reducers/productReducer";
 import { IProduct } from "../../utils/interfaces";
 import DragDropImages from "../DragDropImages/DragDropImages";
-import "./style.css";
+import "./style.scss";
 
 const AddProduct = () => {
   const [state, setState] = useState<IProduct>({

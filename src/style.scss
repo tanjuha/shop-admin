@@ -1,10 +1,11 @@
-:root {
-  --w-sidebar: 250px;
-  --box-shadow: 0 0 35px 0 #9aa1ab26;
-  --text-color: #6c757d;
-  --bg-body: #fafbfe;
-  --border-color: #ced4da;
-}
+$w-sidebar: 250px;
+$box-shadow: 0 0 35px 0 #9aa1ab26;
+$text-color: #6c757d;
+$bg-body: #fafbfe;
+$border-color: #ced4da;
+$box-shadow: 0 0 35px 0 #9aa1ab26;
+
+
 
 body {
   margin: 0;
