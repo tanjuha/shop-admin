@@ -81,6 +81,7 @@ const AddProduct = () => {
                   type="radio"
                   name="currencyType"
                   label="&#x24;"
+                  value="dollar"
                   onChange={handleChange}
                   id="dollar"
                 />
@@ -90,6 +91,7 @@ const AddProduct = () => {
                   type="radio"
                   name="currencyType"
                   label="&#x20AC;"
+                  value="euro"
                   onChange={handleChange}
                   id="euro"
                 />
@@ -99,6 +101,7 @@ const AddProduct = () => {
                   type="radio"
                   name="currencyType"
                   label="&#x20B4;"
+                  value="hryvnia"
                   onChange={handleChange}
                   id="hryvnia"
                 />
