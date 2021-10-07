@@ -16,3 +16,15 @@ export interface Photo {
     src: string | undefined,
     type: string
 }
+
+export const InitialValueProductForm = {
+  photos: [],
+  title: "",
+  description: "",
+  purchasePrice: "",
+  сurrencyСourse: "",
+  currencyType: "dollar",
+  amount: "",
+  salePrice: "",
+  category: "",
+}

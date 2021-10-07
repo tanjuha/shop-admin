@@ -1,43 +1,49 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../store/slices/productReducer";
-import { Product } from "../../shared/types";
+import { InitialValueProductForm, Product } from "../../shared/types";
 import DragDropImages from "../../components/DragDropImages";
 import "./style.scss";
 import { Form, Row, Col, Button } from "react-bootstrap";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const AddProduct = () => {
-  const [state, setState] = useState<Product>({
-    photos: [],
-    title: "",
-    description: "",
-    purchasePrice: "",
-    сurrencyСourse: "",
-    currencyType: "",
-    amount: "",
-    salePrice: "",
-    category: "",
-  });
+  const [state, setState] = useState<Product>(InitialValueProductForm);
 
   const dispatch = useDispatch();
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    dispatch(addProduct(state));
-  };
+  const formik = useFormik({
+    initialValues: state,
+    validationSchema: Yup.object({
+      title: Yup.string()
+        .max(15, "Must be 15 characters or less")
+        .required("Required"),
+      description: Yup.string()
+        .max(500, "Must be 500 characters or less")
+        .required("Required"),
+      purchasePrice: Yup.number()
+        .min(0, "Value should be greater than 0")
+        .required("Required"),
+      сurrencyСourse: Yup.number()
+        .min(0, "Value should be greater than 0")
+        .required("Required"),
+      amount: Yup.number().min(0, "Value should be greater than 0").required("Required"),
+      salePrice: Yup.number()
+        .min(0, "Value should be greater than 0")
+        .required("Required"),
+     
+    }),
+    onSubmit: (values) => {
+      // setState({ ...state, ...values });
+      dispatch(addProduct(values));
+    },
+  });
 
   return (
     <>
       <h4 className="page-title">Add Product</h4>
-      <Form className="form-container" onSubmit={onSubmit}>
+      <Form className="form-container" onSubmit={formik.handleSubmit}>
         <Row>
           <Col xl="6">
             <Form.Group className="mb-3">
@@ -45,35 +51,51 @@ const AddProduct = () => {
               <Form.Control
                 type="text"
                 name="title"
-                onChange={handleChange}
-                required
                 placeholder="Title product"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.title}
               ></Form.Control>
+              <Form.Text className="text-danger">
+                {formik.touched.title && formik.errors.title ? (
+                  <div className="text-danger">{formik.errors.title}</div>
+                ) : null}
+              </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
                 name="description"
-                onChange={handleChange}
-                required
                 placeholder="Description product"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.description}
               ></Form.Control>
+               <Form.Text className="text-danger">
+                {formik.touched.description && formik.errors.description ? (
+                  <div className="text-danger">{formik.errors.description}</div>
+                ) : null}
+              </Form.Text>
             </Form.Group>
-            <Form.Group className="mb-3">
+            {/* <Form.Group className="mb-3">
               <Form.Label>Images</Form.Label>
-              <DragDropImages state={state} setState={setState} />
-            </Form.Group>
+              <DragDropImages state={state} setState={setState} value={formik.values.photos} onChange={formik.handleChange}
+                  onBlur={formik.handleBlur} />
+
+            </Form.Group> */}
           </Col>
           <Col xl="6">
             <div className="mb-3 d-flex align-items-end">
               <Form.Group className="w-100">
                 <Form.Label>Purchase price</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   className="form-control"
                   name="purchasePrice"
-                  onChange={handleChange}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.purchasePrice}
                 ></Form.Control>
               </Form.Group>
               <Form.Group className="form-check mb-2">
@@ -81,9 +103,10 @@ const AddProduct = () => {
                   type="radio"
                   name="currencyType"
                   label="&#x24;"
+                  checked
                   value="dollar"
-                  onChange={handleChange}
-                  id="dollar"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </Form.Group>
               <Form.Group className="form-check mb-2">
@@ -92,8 +115,8 @@ const AddProduct = () => {
                   name="currencyType"
                   label="&#x20AC;"
                   value="euro"
-                  onChange={handleChange}
-                  id="euro"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </Form.Group>
               <Form.Group className="form-check mb-2">
@@ -102,10 +125,15 @@ const AddProduct = () => {
                   name="currencyType"
                   label="&#x20B4;"
                   value="hryvnia"
-                  onChange={handleChange}
-                  id="hryvnia"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </Form.Group>
+              <Form.Text className="text-danger">
+                {formik.touched.currencyType && formik.errors.currencyType ? (
+                  <div className="text-danger">{formik.errors.currencyType}</div>
+                ) : null}
+              </Form.Text>
             </div>
             <Form.Group className="mb-3">
               <Form.Label>Currency course</Form.Label>
@@ -113,7 +141,9 @@ const AddProduct = () => {
                 type="number"
                 className="form-control"
                 name="сurrencyСourse"
-                onChange={handleChange}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.сurrencyСourse}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-3">
@@ -122,7 +152,9 @@ const AddProduct = () => {
                 type="number"
                 className="form-control"
                 name="amount"
-                onChange={handleChange}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.amount}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-3">
@@ -131,7 +163,9 @@ const AddProduct = () => {
                 type="number"
                 className="form-control"
                 name="salePrice"
-                onChange={handleChange}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.salePrice}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-3">
@@ -140,20 +174,25 @@ const AddProduct = () => {
                 as="select"
                 className="form-control"
                 name="category"
-                onChange={handleChange}
                 defaultValue={0}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               >
                 <option disabled value="0">
                   Select category
                 </option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="One">One</option>
+                <option value="Two">Two</option>
+                <option value="Three">Three</option>
               </Form.Control>
             </Form.Group>
           </Col>
         </Row>
-        <Button variant="primary" type="submit">
+        <Button
+          variant="primary"
+          type="submit"
+           disabled={!(formik.isValid && formik.dirty)}
+        >
           Create product
         </Button>
       </Form>

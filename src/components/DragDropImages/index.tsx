@@ -31,7 +31,7 @@ const PrevewPhotos = ({ prevPhotos, deletePrevPhoto }: any) => {
   );
 };
 
-const DragDropImages = ({ state, setState }: any) => {
+const DragDropImages = ({ state, setState, value , onChange, onBlur}: any) => {
   const [dragEnterOver, setDragEnterOver] = useState(false);
 
   const handleFileChange = (e: any) => {
