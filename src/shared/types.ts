@@ -30,3 +30,11 @@ export const InitialValueProductForm = {
   salePrice: "23",
   category: "43",
 }
+
+export interface ProductState  {
+  ids?: any,
+  entities?: any,
+  products?: [],
+  status?: string,
+  error?: any
+}

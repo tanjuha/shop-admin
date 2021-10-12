@@ -4,11 +4,10 @@ import {
   createAsyncThunk,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
-import { Product } from "./../../shared/types";
+import { Product, ProductState } from "./../../shared/types";
 
 //
-
-let valueProductsFromLocalStorage: any = localStorage.getItem("products");
+let valueProductsFromLocalStorage: any  = localStorage.getItem("products");
 let productsArray: any = localStorage.getItem("products")
   ? JSON.parse(valueProductsFromLocalStorage)
   : [];
@@ -18,12 +17,11 @@ export const fetchProducts: any = createAsyncThunk(
   "products/fetchProducts",
   async function (_, thunkAPI) {
     try {
-
       thunkAPI.dispatch(addProducts(productsArray));
 
       return productsArray;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+    } catch ({ message }) {
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -42,13 +40,13 @@ export const fetchProduct: any = createAsyncThunk(
       thunkAPI.dispatch(addProduct(responce));
 
       return responce;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+    } catch ({ message }) {
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-const setError = (state: any, action: any) => {
+const setError = (state: ProductState, action: PayloadAction<Product[]>) => {
   state.status = "reject";
   state.error = action.payload;
 };
@@ -67,30 +65,28 @@ export const productSlice = createSlice({
     addProduct: (state, action: PayloadAction<Product>) => {
       productAdapter.addOne(state, action.payload);
     },
-    addProducts: (state: any, action: PayloadAction<Product[]>) => {
+    addProducts: (state, action: PayloadAction<Product[]>) => {
       productAdapter.addMany(state, action.payload);
     },
   },
   extraReducers: {
     // add products
-    [fetchProducts.pending]: (state: any) => {
+    [fetchProducts.pending]: (state: ProductState) => {
       state.status = "loading";
       state.error = null;
     },
-    [fetchProducts.fulfilled]: (state: any, action: any) => {
+    [fetchProducts.fulfilled]: (state: ProductState) => {
       state.status = "resolved";
-      productAdapter.addMany(state, action.payload);
     },
     [fetchProducts.rejected]: setError,
 
     // add product
-    [fetchProduct.pending]: (state: any) => {
+    [fetchProduct.pending]: (state: ProductState) => {
       state.status = "loading";
       state.error = null;
     },
-    [fetchProduct.fulfilled]: (state: any, action: any) => {
+    [fetchProduct.fulfilled]: (state: ProductState) => {
       state.status = "resolved";
-      productAdapter.addOne(state, action.payload);
     },
     [fetchProduct.rejected]: setError,
   },
