@@ -1,18 +1,47 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+  createEntityAdapter,
+} from "@reduxjs/toolkit";
+import { Product } from "./../../shared/types";
 
+//
+
+let valueProductsFromLocalStorage: any = localStorage.getItem("products");
+let productsArray: any = localStorage.getItem("products")
+  ? JSON.parse(valueProductsFromLocalStorage)
+  : [];
+
+// get all products
 export const fetchProducts: any = createAsyncThunk(
   "products/fetchProducts",
   async function (_, thunkAPI) {
     try {
-      const response = await fetch(`https://randomuser.me/api/?results=10`);
 
-      if (!response.ok) {
-        throw new Error("Error :( ");
-      }
+      thunkAPI.dispatch(addProducts(productsArray));
 
-      const { results } = await response.json();
+      return productsArray;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-      return results;
+// get one product
+export const fetchProduct: any = createAsyncThunk(
+  "products/fetchProduct",
+  async function (arg: Product, thunkAPI) {
+    try {
+      const responce = { ...arg, id: Date.now() };
+
+      productsArray.push(responce);
+
+      localStorage.setItem("products", JSON.stringify(productsArray));
+
+      thunkAPI.dispatch(addProduct(responce));
+
+      return responce;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -24,36 +53,49 @@ const setError = (state: any, action: any) => {
   state.error = action.payload;
 };
 
-export interface ProductState {
-  products: any;
-}
+export const productAdapter = createEntityAdapter<Product>({
+  selectId: (product) => product.id,
+});
+const initialState = productAdapter.getInitialState();
 
-const initialState: ProductState = {
-  products: [],
-};
+export const productSelectors = productAdapter.getSelectors();
 
 export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    addProduct: (state, action: PayloadAction<any>) => {
-      state.products = [...state.products, action.payload];
-      localStorage.setItem("products", JSON.stringify(state.products));
+    addProduct: (state, action: PayloadAction<Product>) => {
+      productAdapter.addOne(state, action.payload);
+    },
+    addProducts: (state: any, action: PayloadAction<Product[]>) => {
+      productAdapter.addMany(state, action.payload);
     },
   },
   extraReducers: {
+    // add products
     [fetchProducts.pending]: (state: any) => {
       state.status = "loading";
       state.error = null;
     },
     [fetchProducts.fulfilled]: (state: any, action: any) => {
       state.status = "resolved";
-      state.products = action.payload;
+      productAdapter.addMany(state, action.payload);
     },
     [fetchProducts.rejected]: setError,
+
+    // add product
+    [fetchProduct.pending]: (state: any) => {
+      state.status = "loading";
+      state.error = null;
+    },
+    [fetchProduct.fulfilled]: (state: any, action: any) => {
+      state.status = "resolved";
+      productAdapter.addOne(state, action.payload);
+    },
+    [fetchProduct.rejected]: setError,
   },
 });
 
-export const { addProduct } = productSlice.actions;
+export const { addProduct, addProducts } = productSlice.actions;
 
 export default productSlice.reducer;

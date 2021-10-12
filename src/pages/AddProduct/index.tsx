@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../../store/slices/productReducer";
-import { InitialValueProductForm, Product } from "../../shared/types";
+import { InitialValueProductForm } from "../../shared/types";
 import "./style.scss";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { fetchProduct } from "./../../store/slices/productReducer";
 
 const AddProduct = () => {
-  const [state, setState] = useState<Product>(InitialValueProductForm);
-
+  
   const dispatch = useDispatch();
 
   const formik = useFormik({
-    initialValues: state,
+    initialValues: InitialValueProductForm,
     validationSchema: Yup.object({
       title: Yup.string()
         .max(15, "Must be 15 characters or less")
@@ -34,9 +33,9 @@ const AddProduct = () => {
         .min(0, "Value should be greater than 0")
         .required("Required"),
     }),
-    onSubmit: (values) => {
-      setState({ ...state, ...values });
-      dispatch(addProduct(values));
+    onSubmit: (values, { resetForm }) => {
+      dispatch(fetchProduct(values));
+      resetForm();
     },
   });
 

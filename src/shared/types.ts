@@ -1,13 +1,14 @@
 export interface Product {
+  id: number | string,
   title: string;
   description: string;
-  purchasePrice: string;
-  сurrencyСourse: string;
-  currencyType: string;
-  amount: string;
-  salePrice: string;
-  category: string;
-  photos: any[];
+  purchasePrice?: string;
+  сurrencyСourse?: string;
+  currencyType?: string;
+  amount?: string;
+  salePrice?: string;
+  category?: string;
+  photos?: any[];
 }
 
 export interface Photo {
@@ -18,13 +19,14 @@ export interface Photo {
 }
 
 export const InitialValueProductForm = {
+  id: null,
   photos: [],
   title: "",
-  description: "",
-  purchasePrice: "",
-  сurrencyСourse: "",
+  description: "description",
+  purchasePrice: "34",
+  сurrencyСourse: "23",
   currencyType: "dollar",
-  amount: "",
-  salePrice: "",
-  category: "",
+  amount: "43",
+  salePrice: "23",
+  category: "43",
 }
