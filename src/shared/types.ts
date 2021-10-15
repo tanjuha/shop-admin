@@ -1,5 +1,5 @@
 export interface Product {
-  id: number | string,
+  id: number | string;
   title: string;
   description: string;
   purchasePrice?: string;
@@ -8,33 +8,34 @@ export interface Product {
   amount?: string;
   salePrice?: string;
   category?: string;
-  photos?: any[];
+  photos?: any;
 }
 
 export interface Photo {
-    name: string,
-    size: number,
-    src: string | undefined,
-    type: string
+  name: string;
+  size: number;
+  src: string | undefined;
+  type: string;
 }
 
 export const InitialValueProductForm = {
   id: null,
-  photos: [],
   title: "",
   description: "description",
   purchasePrice: "34",
-  сurrencyСourse: "23",
   currencyType: "dollar",
-  amount: "43",
   salePrice: "23",
   category: "43",
-}
+  сurrencyСourse: "23",
+  amount: "43",
+  photos: "",
+};
 
-export interface ProductState  {
-  ids?: any,
-  entities?: any,
-  products?: [],
-  status?: string,
-  error?: any
+export interface ProductState {
+  ids?: any;
+  entities?: any;
+  products?: Product[];
+  productDetails?: any;
+  status?: any;
+  error?: any;
 }

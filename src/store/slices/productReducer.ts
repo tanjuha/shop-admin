@@ -7,7 +7,7 @@ import {
 import { Product, ProductState } from "./../../shared/types";
 
 //
-let valueProductsFromLocalStorage: any  = localStorage.getItem("products");
+let valueProductsFromLocalStorage: any = localStorage.getItem("products");
 let productsArray: any = localStorage.getItem("products")
   ? JSON.parse(valueProductsFromLocalStorage)
   : [];
@@ -46,13 +46,29 @@ export const fetchProduct: any = createAsyncThunk(
   }
 );
 
+// get product details
+export const fetchProductDetails: any = createAsyncThunk(
+  "products/fetchProductDetails",
+  async function (arg: any, thunkAPI) {
+    try {
+      const data: any = await productsArray.find((value: Product) => value.id === +arg);
+
+      thunkAPI.dispatch(addProductDeteails(data))
+
+      return data;
+    } catch ({ message }) {
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const setError = (state: ProductState, action: PayloadAction<Product[]>) => {
   state.status = "reject";
   state.error = action.payload;
 };
 
 export const productAdapter = createEntityAdapter<Product>({
-  selectId: (product) => product.id,
+  selectId: (product) => product.id
 });
 const initialState = productAdapter.getInitialState();
 
@@ -68,6 +84,12 @@ export const productSlice = createSlice({
     addProducts: (state, action: PayloadAction<Product[]>) => {
       productAdapter.addMany(state, action.payload);
     },
+    addProductDeteails: (state, action: any) => {
+      
+    //  productAdapter.selectId( action.payload);
+    }
+
+    
   },
   extraReducers: {
     // add products
@@ -89,9 +111,21 @@ export const productSlice = createSlice({
       state.status = "resolved";
     },
     [fetchProduct.rejected]: setError,
+
+     // add product details
+     [fetchProductDetails.pending]: (state: ProductState) => {
+      state.status = "loading";
+      state.error = null;
+    },
+    [fetchProductDetails.fulfilled]: (state: ProductState, action) => {
+      state.status = "resolved";
+      state.productDetails = action.payload
+    },
+    [fetchProductDetails.rejected]: setError,
   },
 });
 
-export const { addProduct, addProducts } = productSlice.actions;
+export const { addProduct, addProducts, addProductDeteails } =
+  productSlice.actions;
 
 export default productSlice.reducer;

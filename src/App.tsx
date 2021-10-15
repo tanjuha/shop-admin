@@ -11,6 +11,7 @@ import {
 import Home from "./pages/Home";
 import AddProduct from "./pages/AddProduct";
 import Products from "./pages/Products";
+import ProductDetails from "./pages/ProductDetails";
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: "/shop-admin/add-product",
     exact: true,
     main: () => <AddProduct />,
+  },
+  {
+    path: "/shop-admin/products/product-details/:id",
+    exact: true,
+    main: () => <ProductDetails />,
   },
 ];
 
