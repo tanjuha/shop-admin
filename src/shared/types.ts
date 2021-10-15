@@ -38,4 +38,5 @@ export interface ProductState {
   productDetails?: any;
   status?: any;
   error?: any;
+  notification?: any;
 }

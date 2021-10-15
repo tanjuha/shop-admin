@@ -51,9 +51,11 @@ export const fetchProductDetails: any = createAsyncThunk(
   "products/fetchProductDetails",
   async function (arg: any, thunkAPI) {
     try {
-      const data: any = await productsArray.find((value: Product) => value.id === +arg);
+      const data: any = await productsArray.find(
+        (value: Product) => value.id === +arg
+      );
 
-      thunkAPI.dispatch(addProductDeteails(data))
+      thunkAPI.dispatch(addProductDeteails(data));
 
       return data;
     } catch ({ message }) {
@@ -62,13 +64,37 @@ export const fetchProductDetails: any = createAsyncThunk(
   }
 );
 
+export const removeNotification: any = createAsyncThunk(
+  "products/removeNotification",
+  async function (_, thunkAPI) {
+    try {
+        console.log("some logic to remove notification")
+
+    } catch ({message}) {
+      return thunkAPI.rejectWithValue(message)
+    }
+    
+  }
+)
+
 const setError = (state: ProductState, action: PayloadAction<Product[]>) => {
   state.status = "reject";
   state.error = action.payload;
 };
 
+const setNotification = (message: any, type: any, isShow: any) => {
+    
+  let notification: any = {
+    message,
+    type,
+    isShow,
+  };
+
+  return notification;
+};
+
 export const productAdapter = createEntityAdapter<Product>({
-  selectId: (product) => product.id
+  selectId: (product) => product.id,
 });
 const initialState = productAdapter.getInitialState();
 
@@ -85,11 +111,10 @@ export const productSlice = createSlice({
       productAdapter.addMany(state, action.payload);
     },
     addProductDeteails: (state, action: any) => {
-      
-    //  productAdapter.selectId( action.payload);
-    }
-
+      //  productAdapter.selectId( action.payload);
+    },
     
+  
   },
   extraReducers: {
     // add products
@@ -109,23 +134,32 @@ export const productSlice = createSlice({
     },
     [fetchProduct.fulfilled]: (state: ProductState) => {
       state.status = "resolved";
+      state.notification = setNotification("message", "success", true);
     },
     [fetchProduct.rejected]: setError,
 
-     // add product details
-     [fetchProductDetails.pending]: (state: ProductState) => {
+    // add product details
+    [fetchProductDetails.pending]: (state: ProductState) => {
       state.status = "loading";
       state.error = null;
     },
     [fetchProductDetails.fulfilled]: (state: ProductState, action) => {
       state.status = "resolved";
-      state.productDetails = action.payload
+      state.productDetails = action.payload;
     },
     [fetchProductDetails.rejected]: setError,
+
+    // notification
+    [removeNotification.fulfilled] : (state: any, action) => {
+      state.notification = null
+    }
   },
 });
 
-export const { addProduct, addProducts, addProductDeteails } =
-  productSlice.actions;
+export const {
+  addProduct,
+  addProducts,
+  addProductDeteails,
+} = productSlice.actions;
 
 export default productSlice.reducer;

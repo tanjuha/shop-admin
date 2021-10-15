@@ -1,14 +1,16 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { InitialValueProductForm } from "../../shared/types";
 import "./style.scss";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { fetchProduct } from "./../../store/slices/productReducer";
+import Notification from "../../components/Notification";
 
 const AddProduct = () => {
-  
+  const { notification } = useSelector((state: any) => state.products);
+
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -42,6 +44,7 @@ const AddProduct = () => {
   return (
     <>
       <h4 className="page-title">Add Product</h4>
+      {notification && <Notification notification={notification} />}
       <Form className="form-container" onSubmit={formik.handleSubmit}>
         <Row>
           <Col xl="6">
