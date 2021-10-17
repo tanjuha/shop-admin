@@ -4,7 +4,7 @@ import {
   createAsyncThunk,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
-import { Product, ProductState } from "./../../shared/types";
+import { Product, ProductState, RootState } from "./../../shared/types";
 
 //
 let valueProductsFromLocalStorage: any = localStorage.getItem("products");
@@ -15,13 +15,13 @@ let productsArray: any = localStorage.getItem("products")
 // get all products
 export const fetchProducts: any = createAsyncThunk(
   "products/fetchProducts",
-  async function (_, thunkAPI) {
+  async function (_, { dispatch, rejectWithValue }) {
     try {
-      thunkAPI.dispatch(addProducts(productsArray));
-
-      return productsArray;
+      // productsArray gets from localStorage
+      const data = dispatch(addProducts(productsArray));
+      return data;
     } catch ({ message }) {
-      return thunkAPI.rejectWithValue(message);
+      return rejectWithValue(message);
     }
   }
 );
@@ -68,14 +68,12 @@ export const removeNotification: any = createAsyncThunk(
   "products/removeNotification",
   async function (_, thunkAPI) {
     try {
-        console.log("some logic to remove notification")
-
-    } catch ({message}) {
-      return thunkAPI.rejectWithValue(message)
+      console.log("some logic to remove notification");
+    } catch ({ message }) {
+      return thunkAPI.rejectWithValue(message);
     }
-    
   }
-)
+);
 
 const setError = (state: ProductState, action: PayloadAction<Product[]>) => {
   state.status = "reject";
@@ -83,7 +81,6 @@ const setError = (state: ProductState, action: PayloadAction<Product[]>) => {
 };
 
 const setNotification = (message: any, type: any, isShow: any) => {
-    
   let notification: any = {
     message,
     type,
@@ -98,23 +95,17 @@ export const productAdapter = createEntityAdapter<Product>({
 });
 const initialState = productAdapter.getInitialState();
 
-export const productSelectors = productAdapter.getSelectors();
+export const productSelectors = productAdapter.getSelectors<RootState>(
+  (state) => state.products
+);
 
 export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    addProduct: (state, action: PayloadAction<Product>) => {
-      productAdapter.addOne(state, action.payload);
-    },
-    addProducts: (state, action: PayloadAction<Product[]>) => {
-      productAdapter.addMany(state, action.payload);
-    },
-    addProductDeteails: (state, action: any) => {
-      //  productAdapter.selectId( action.payload);
-    },
-    
-  
+    addProducts: productAdapter.addMany,
+    addProduct: productAdapter.addOne,
+    addProductDeteails: productAdapter.addOne,
   },
   extraReducers: {
     // add products
@@ -150,16 +141,13 @@ export const productSlice = createSlice({
     [fetchProductDetails.rejected]: setError,
 
     // notification
-    [removeNotification.fulfilled] : (state: any, action) => {
-      state.notification = null
-    }
+    [removeNotification.fulfilled]: (state: any) => {
+      state.notification = null;
+    },
   },
 });
 
-export const {
-  addProduct,
-  addProducts,
-  addProductDeteails,
-} = productSlice.actions;
+export const { addProduct, addProducts, addProductDeteails } =
+  productSlice.actions;
 
 export default productSlice.reducer;

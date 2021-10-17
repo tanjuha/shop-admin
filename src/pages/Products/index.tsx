@@ -14,17 +14,13 @@ const Products = () => {
   const dispatch = useDispatch();
   let history = useHistory();
 
-  // 
-  
   const { status, error } = useSelector((state: any) => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const allProducts = useSelector((state: any) =>
-    productSelectors.selectAll(state.products)
-  );
+  const allProducts = useSelector(productSelectors.selectAll );
 
   const showInfo = (id: string | number) => {
     history.push(`/shop-admin/products/product-details/${id}`)

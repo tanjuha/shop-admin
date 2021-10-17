@@ -40,3 +40,7 @@ export interface ProductState {
   error?: any;
   notification?: any;
 }
+
+export interface RootState {
+  products?: any
+}
