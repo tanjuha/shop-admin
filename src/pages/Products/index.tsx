@@ -6,7 +6,6 @@ import {
   productSelectors,
 } from "./../../store/slices/productReducer";
 import { Spinner } from "react-bootstrap";
-import { Images } from "react-bootstrap-icons";
 import { Product } from "../../shared/types";
 import { useHistory } from "react-router-dom";
 import Table from "react-bootstrap/Table";

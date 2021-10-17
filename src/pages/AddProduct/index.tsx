@@ -45,7 +45,7 @@ const AddProduct = () => {
     <>
       <h4 className="page-title">Add Product</h4>
       {notification && <Notification notification={notification} />}
-      <Form className="form-container" onSubmit={formik.handleSubmit}>
+      <Form className="form-container page-body" onSubmit={formik.handleSubmit}>
         <Row>
           <Col xl="6">
             <Form.Group className="mb-3">
