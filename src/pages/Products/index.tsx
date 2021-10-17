@@ -6,9 +6,10 @@ import {
   productSelectors,
 } from "./../../store/slices/productReducer";
 import { Spinner } from "react-bootstrap";
-import { Images } from 'react-bootstrap-icons';
+import { Images } from "react-bootstrap-icons";
 import { Product } from "../../shared/types";
 import { useHistory } from "react-router-dom";
+import Table from "react-bootstrap/Table";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -20,33 +21,48 @@ const Products = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const allProducts = useSelector(productSelectors.selectAll );
+  const allProducts = useSelector(productSelectors.selectAll);
 
   const showInfo = (id: string | number) => {
-    history.push(`/shop-admin/products/product-details/${id}`)
-  }
+    history.push(`/shop-admin/products/product-details/${id}`);
+  };
 
   return (
     <>
       <h4 className="page-title">All products</h4>
-      <img src="" alt="" />
       {status === "loading" && <Spinner animation="border" />}
       {error && <h4>Something wrong ... </h4>}
-      <ul>
-        {allProducts &&
-          allProducts.map((product: Product) => {
-            return (
-            <li key={product.id}> 
-            {product.photos.length > 0 
-            ?  <img src="https://picsum.photos/50/50?random=1" alt={product.title} />
-            : <Images />
-            }
-            {product.title}
-            <button className="btn btn-info m-2" onClick={() => showInfo(product.id)}>Info</button>
-            </li>
-            );
-          })}
-      </ul>
+
+      <Table striped bordered hover size="md">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allProducts &&
+            allProducts.map((product: Product, index: number) => {
+              return (
+                <tr key={product.id}>
+                  <td>{index + 1}</td>
+                  <td>{product.title}</td>
+                  <td>{product.description}</td>
+                  <td>
+                    <button
+                      className="btn btn-info m-2"
+                      onClick={() => showInfo(product.id)}
+                    >
+                      Info
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </Table>
     </>
   );
 };
