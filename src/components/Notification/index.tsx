@@ -8,9 +8,12 @@ const Notification = ({ notification: { message, type, isShow } }: any) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       dispatch(removeNotification());
     }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [dispatch]);
 
   return (
