@@ -61,7 +61,7 @@ const ProductDetails = () => {
                   <img
                   className="photo"
                     src={
-                      details.photos ? details.photos : "https://picsum.photos/150/150?random=1"
+                      details.image ? details.image : "https://picsum.photos/150/150?random=1"
                     }
                     alt={details.title}
                   />

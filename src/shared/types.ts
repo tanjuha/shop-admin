@@ -8,7 +8,7 @@ export interface Product {
   amount?: string;
   salePrice?: string;
   category?: string;
-  photos?: any;
+  image?: any;
 }
 
 export interface Photo {
@@ -28,7 +28,7 @@ export const InitialValueProductForm = {
   category: "43",
   сurrencyСourse: "23",
   amount: "43",
-  photos: null,
+  image: null,
 };
 
 export interface ProductState {

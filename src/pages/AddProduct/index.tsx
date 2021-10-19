@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { InitialValueProductForm } from "../../shared/types";
 import "./style.scss";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { useField, useFormik, validateYupSchema } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { fetchProduct } from "./../../store/slices/productReducer";
 import Notification from "../../components/Notification";
@@ -15,12 +15,12 @@ const getImgBase64 = (file: any, formik: any) => {
     reader.readAsDataURL(file);
 
     reader.onloadend = () => {
-      formik.setFieldValue("photos", reader.result);
+      formik.setFieldValue("image", reader.result);
     };
   }
 };
 
-const PreviewPhoto = ({ formik, fileData }: any) => {
+const PreviewImage = ({ formik, fileData }: any) => {
   const [photoBase64, setPhotoBase64] = useState("");
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const PreviewPhoto = ({ formik, fileData }: any) => {
       {fileData && (
         <>
           <Form.Label>Preview images</Form.Label>
-          <img className="prevImg" src={photoBase64} alt="Preview image" />
+          <img className="prevImg" src={photoBase64} alt="Preview" />
         </>
       )}
     </>
@@ -79,6 +79,7 @@ const AddProduct = () => {
       <Form className="form-container page-body" onSubmit={formik.handleSubmit}>
         <Row>
           <Col xl="6">
+            {/* start title field */}
             <Form.Group className="mb-3">
               <Form.Label>Title</Form.Label>
               <Form.Control
@@ -89,12 +90,17 @@ const AddProduct = () => {
                 onBlur={formik.handleBlur}
                 value={formik.values.title}
               ></Form.Control>
+              {/* start error message */}
               <Form.Text className="text-danger">
                 {formik.touched.title && formik.errors.title ? (
                   <div className="text-danger">{formik.errors.title}</div>
                 ) : null}
               </Form.Text>
+              {/* start error message */}
             </Form.Group>
+            {/* end title field */}
+
+            {/* start description field */}
             <Form.Group className="mb-3">
               <Form.Label>Description</Form.Label>
               <Form.Control
@@ -105,14 +111,18 @@ const AddProduct = () => {
                 onBlur={formik.handleBlur}
                 value={formik.values.description}
               ></Form.Control>
+              {/* start error message */}
               <Form.Text className="text-danger">
                 {formik.touched.description && formik.errors.description ? (
                   <div className="text-danger">{formik.errors.description}</div>
                 ) : null}
               </Form.Text>
+              {/* end error message */}
             </Form.Group>
+            {/* end description field */}
 
             <div className="mb-3 d-flex align-items-end">
+              {/* start purchase price field */}
               <Form.Group className="w-100">
                 <Form.Label>Purchase price</Form.Label>
                 <Form.Control
@@ -124,6 +134,9 @@ const AddProduct = () => {
                   value={formik.values.purchasePrice}
                 ></Form.Control>
               </Form.Group>
+              {/* end purchase price field */}
+
+              {/* start currency type of purchase price field */}
               <Form.Group className="form-check mb-2">
                 <Form.Check
                   type="radio"
@@ -155,6 +168,7 @@ const AddProduct = () => {
                   onBlur={formik.handleBlur}
                 />
               </Form.Group>
+              {/* start error message */}
               <Form.Text className="text-danger">
                 {formik.touched.currencyType && formik.errors.currencyType ? (
                   <div className="text-danger">
@@ -162,8 +176,11 @@ const AddProduct = () => {
                   </div>
                 ) : null}
               </Form.Text>
+              {/* end error message */}
+              {/* end currency type of purchase price field */}
             </div>
 
+            {/* start sale price field */}
             <Form.Group className="mb-3">
               <Form.Label>Sale price</Form.Label>
               <Form.Control
@@ -175,6 +192,9 @@ const AddProduct = () => {
                 value={formik.values.salePrice}
               ></Form.Control>
             </Form.Group>
+            {/* end sale price field */}
+
+            {/* start category field */}
             <Form.Group className="mb-3">
               <Form.Label>Category</Form.Label>
               <Form.Control
@@ -193,8 +213,10 @@ const AddProduct = () => {
                 <option value="Three">Three</option>
               </Form.Control>
             </Form.Group>
+            {/* end category field */}
           </Col>
           <Col xl="6">
+            {/* start currency course field */}
             <Form.Group className="mb-3">
               <Form.Label>Currency course</Form.Label>
               <Form.Control
@@ -206,6 +228,9 @@ const AddProduct = () => {
                 value={formik.values.сurrencyСourse}
               ></Form.Control>
             </Form.Group>
+            {/* end currency course field */}
+
+            {/* start amount field */}
             <Form.Group className="mb-3">
               <Form.Label>Amount</Form.Label>
               <Form.Control
@@ -217,20 +242,25 @@ const AddProduct = () => {
                 value={formik.values.amount}
               ></Form.Control>
             </Form.Group>
+            {/* end amount field */}
 
+            {/* start image field */}
             <Form.Group className="mb-3">
-              <Form.Label>Images</Form.Label>
+              <Form.Label>Image</Form.Label>
               <Form.Control
                 type="file"
-                name="photos"
+                name="image"
                 onChange={(event: any) => {
                   getImgBase64(event.currentTarget.files[0], formik);
                 }}
                 onBlur={formik.handleBlur}
               ></Form.Control>
             </Form.Group>
+            {/* end image field */}
 
-            <PreviewPhoto formik={formik} fileData={formik.values.photos} />
+            {/* start preview image field */}
+            <PreviewImage formik={formik} fileData={formik.values.image} />
+            {/* start preview image field */}
           </Col>
         </Row>
         <Button
