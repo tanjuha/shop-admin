@@ -28,7 +28,7 @@ export const InitialValueProductForm = {
   category: "43",
   сurrencyСourse: "23",
   amount: "43",
-  photos: "",
+  photos: null,
 };
 
 export interface ProductState {

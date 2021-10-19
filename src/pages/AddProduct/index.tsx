@@ -1,12 +1,43 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { InitialValueProductForm } from "../../shared/types";
 import "./style.scss";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { useFormik } from "formik";
+import { useField, useFormik, validateYupSchema } from "formik";
 import * as Yup from "yup";
 import { fetchProduct } from "./../../store/slices/productReducer";
 import Notification from "../../components/Notification";
+
+const getImgBase64 = (file: any, formik: any) => {
+  if (file) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      formik.setFieldValue("photos", reader.result);
+    };
+  }
+};
+
+const PreviewPhoto = ({ formik, fileData }: any) => {
+  const [photoBase64, setPhotoBase64] = useState("");
+
+  useEffect(() => {
+    setPhotoBase64(formik.getFieldProps(fileData).name);
+  }, [fileData]);
+
+  return (
+    <>
+      {fileData && (
+        <>
+          <Form.Label>Preview images</Form.Label>
+          <img className="prevImg" src={photoBase64} alt="Preview image" />
+        </>
+      )}
+    </>
+  );
+};
 
 const AddProduct = () => {
   const { notification } = useSelector((state: any) => state.products);
@@ -192,10 +223,14 @@ const AddProduct = () => {
               <Form.Control
                 type="file"
                 name="photos"
-                onChange={formik.handleChange}
+                onChange={(event: any) => {
+                  getImgBase64(event.currentTarget.files[0], formik);
+                }}
                 onBlur={formik.handleBlur}
               ></Form.Control>
             </Form.Group>
+
+            <PreviewPhoto formik={formik} fileData={formik.values.photos} />
           </Col>
         </Row>
         <Button

@@ -5,6 +5,7 @@ import { fetchProductDetails } from "../../store/slices/productReducer";
 import { useParams } from "react-router";
 import { productSelectors } from "../../store/slices/productReducer";
 import { Col, Row, Spinner } from "react-bootstrap";
+import "./style.scss"
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -58,7 +59,10 @@ const ProductDetails = () => {
               <Col xl="4">
                 <div className="d-flex flex-column justify-content-center align-items-center">
                   <img
-                    src="https://picsum.photos/150/150?random=1"
+                  className="photo"
+                    src={
+                      details.photos ? details.photos : "https://picsum.photos/150/150?random=1"
+                    }
                     alt={details.title}
                   />
                   <div className="d-flex align-items-center mt-2">
