@@ -1,17 +1,19 @@
 import React from "react";
-import Footer from "./pages/Footer";
-import Sidebar from "./components/Sidebar";
-import "./app.scss";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+
 import Home from "./pages/Home";
 import AddProduct from "./pages/AddProduct";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
+import Footer from "./pages/Footer";
+import Sidebar from "./components/Sidebar";
+
+import "./app.scss";
 
 const routes = [
   {

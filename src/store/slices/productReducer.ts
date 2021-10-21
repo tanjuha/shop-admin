@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { Product, ProductState, RootState } from "./../../shared/types";
 
-//
+// get and push values to the localStorage
 let valueProductsFromLocalStorage: any = localStorage.getItem("products");
 let productsArray: any = localStorage.getItem("products")
   ? JSON.parse(valueProductsFromLocalStorage)
@@ -15,10 +15,12 @@ let productsArray: any = localStorage.getItem("products")
 // get all products
 export const fetchProducts: any = createAsyncThunk(
   "products/fetchProducts",
-  async function (_, { dispatch, rejectWithValue }) {
+  async function (_, { dispatch, rejectWithValue, getState }) {
     try {
+
       // productsArray gets from localStorage
       const data = dispatch(addProducts(productsArray));
+
       return data;
     } catch ({ message }) {
       return rejectWithValue(message);
@@ -29,7 +31,7 @@ export const fetchProducts: any = createAsyncThunk(
 // get one product
 export const fetchProduct: any = createAsyncThunk(
   "products/fetchProduct",
-  async function (arg: Product, thunkAPI) {
+  async function (arg: Product, { dispatch, rejectWithValue }) {
     try {
       const responce = { ...arg, id: Date.now() };
 
@@ -37,11 +39,11 @@ export const fetchProduct: any = createAsyncThunk(
 
       localStorage.setItem("products", JSON.stringify(productsArray));
 
-      thunkAPI.dispatch(addProduct(responce));
+      dispatch(addProduct(responce));
 
       return responce;
     } catch ({ message }) {
-      return thunkAPI.rejectWithValue(message);
+      return rejectWithValue(message);
     }
   }
 );
@@ -49,28 +51,30 @@ export const fetchProduct: any = createAsyncThunk(
 // get product details
 export const fetchProductDetails: any = createAsyncThunk(
   "products/fetchProductDetails",
-  async function (arg: any, thunkAPI) {
+  async function (arg: any, { dispatch, rejectWithValue }) {
     try {
       const data: any = await productsArray.find(
         (value: Product) => value.id === +arg
       );
 
-      thunkAPI.dispatch(addProductDeteails(data));
+      dispatch(addProductDeteails(data));
 
       return data;
     } catch ({ message }) {
-      return thunkAPI.rejectWithValue(message);
+      return rejectWithValue(message);
     }
   }
 );
 
 export const removeNotification: any = createAsyncThunk(
   "products/removeNotification",
-  async function (_, thunkAPI) {
+  async function (_, { rejectWithValue }) {
     try {
+
       console.log("some logic to remove notification");
+      
     } catch ({ message }) {
-      return thunkAPI.rejectWithValue(message);
+      return rejectWithValue(message);
     }
   }
 );

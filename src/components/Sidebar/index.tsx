@@ -1,6 +1,6 @@
 import React from "react";
-import "./style.scss";
 import { NavLink } from "react-router-dom";
+import "./style.scss";
 
 const Sidebar = () => {
   return (
@@ -17,6 +17,7 @@ const Sidebar = () => {
         >
           Home
         </NavLink>
+
         <NavLink
           to="/shop-admin/add-product"
           className="nav-link"
@@ -24,6 +25,7 @@ const Sidebar = () => {
         >
           Add product
         </NavLink>
+        
         <NavLink
           to="/shop-admin/products"
           className="nav-link"

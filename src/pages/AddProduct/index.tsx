@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { InitialValueProductForm } from "../../shared/types";
-import "./style.scss";
-import { Form, Row, Col, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+
+import { Form, Row, Col, Button } from "react-bootstrap";
+import { InitialValueProductForm } from "../../shared/types";
 import { fetchProduct } from "./../../store/slices/productReducer";
 import Notification from "../../components/Notification";
+
+import "./style.scss";
 
 const getImgBase64 = (file: any, formik: any) => {
   if (file) {
@@ -21,11 +23,12 @@ const getImgBase64 = (file: any, formik: any) => {
 };
 
 const PreviewImage = ({ formik, fileData }: any) => {
+
   const [photoBase64, setPhotoBase64] = useState("");
 
   useEffect(() => {
     setPhotoBase64(formik.getFieldProps(fileData).name);
-  }, [fileData]);
+  }, [fileData, formik]);
 
   return (
     <>
@@ -40,6 +43,7 @@ const PreviewImage = ({ formik, fileData }: any) => {
 };
 
 const AddProduct = () => {
+
   const { notification } = useSelector((state: any) => state.products);
 
   const dispatch = useDispatch();
@@ -75,10 +79,13 @@ const AddProduct = () => {
   return (
     <>
       <h4 className="page-title">Add Product</h4>
+
       {notification && <Notification notification={notification} />}
+
       <Form className="form-container page-body" onSubmit={formik.handleSubmit}>
         <Row>
           <Col xl="6">
+
             {/* start title field */}
             <Form.Group className="mb-3">
               <Form.Label>Title</Form.Label>
@@ -111,6 +118,7 @@ const AddProduct = () => {
                 onBlur={formik.handleBlur}
                 value={formik.values.description}
               ></Form.Control>
+
               {/* start error message */}
               <Form.Text className="text-danger">
                 {formik.touched.description && formik.errors.description ? (
@@ -122,6 +130,7 @@ const AddProduct = () => {
             {/* end description field */}
 
             <div className="mb-3 d-flex align-items-end">
+
               {/* start purchase price field */}
               <Form.Group className="w-100">
                 <Form.Label>Purchase price</Form.Label>
@@ -148,6 +157,7 @@ const AddProduct = () => {
                   onBlur={formik.handleBlur}
                 />
               </Form.Group>
+
               <Form.Group className="form-check mb-2">
                 <Form.Check
                   type="radio"
@@ -158,6 +168,7 @@ const AddProduct = () => {
                   onBlur={formik.handleBlur}
                 />
               </Form.Group>
+
               <Form.Group className="form-check mb-2">
                 <Form.Check
                   type="radio"
@@ -168,6 +179,7 @@ const AddProduct = () => {
                   onBlur={formik.handleBlur}
                 />
               </Form.Group>
+
               {/* start error message */}
               <Form.Text className="text-danger">
                 {formik.touched.currencyType && formik.errors.currencyType ? (
@@ -177,7 +189,9 @@ const AddProduct = () => {
                 ) : null}
               </Form.Text>
               {/* end error message */}
+
               {/* end currency type of purchase price field */}
+
             </div>
 
             {/* start sale price field */}
@@ -213,6 +227,7 @@ const AddProduct = () => {
                 <option value="Three">Three</option>
               </Form.Control>
             </Form.Group>
+
             {/* end category field */}
           </Col>
           <Col xl="6">
@@ -261,8 +276,10 @@ const AddProduct = () => {
             {/* start preview image field */}
             <PreviewImage formik={formik} fileData={formik.values.image} />
             {/* start preview image field */}
+
           </Col>
         </Row>
+
         <Button
           variant="primary"
           type="submit"
@@ -270,6 +287,7 @@ const AddProduct = () => {
         >
           Create product
         </Button>
+        
       </Form>
     </>
   );

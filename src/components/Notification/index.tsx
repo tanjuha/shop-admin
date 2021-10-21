@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Alert } from "react-bootstrap";
 import { setTimeout } from "timers";
 import { useDispatch } from "react-redux";
+
 import { removeNotification } from "../../store/slices/productReducer";
 
 const Notification = ({ notification: { message, type, isShow } }: any) => {
@@ -11,10 +12,11 @@ const Notification = ({ notification: { message, type, isShow } }: any) => {
     let timer = setTimeout(() => {
       dispatch(removeNotification());
     }, 2000);
+
     return () => {
       clearTimeout(timer);
     };
-  }, [dispatch]);
+  }, []);
 
   return (
     <Alert

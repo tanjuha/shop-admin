@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./style.scss";
+import { useHistory } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+
+import Table from "react-bootstrap/Table";
+
 import {
   fetchProducts,
   productSelectors,
 } from "./../../store/slices/productReducer";
-import { Spinner } from "react-bootstrap";
 import { Product } from "../../shared/types";
-import { useHistory } from "react-router-dom";
-import Table from "react-bootstrap/Table";
+
+import "./style.scss";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -29,7 +32,9 @@ const Products = () => {
   return (
     <>
       <h4 className="page-title">All products</h4>
+
       {status === "loading" && <Spinner animation="border" />}
+
       {error && <h4>Something wrong ... </h4>}
 
       <Table striped bordered hover size="md">
@@ -46,9 +51,13 @@ const Products = () => {
             allProducts.map((product: Product, index: number) => {
               return (
                 <tr key={product.id}>
+
                   <td>{index + 1}</td>
+
                   <td>{product.title}</td>
+
                   <td>{product.description}</td>
+
                   <td>
                     <button
                       className="btn btn-info m-2"
@@ -57,6 +66,7 @@ const Products = () => {
                       Info
                     </button>
                   </td>
+                  
                 </tr>
               );
             })}
